@@ -4,23 +4,32 @@ import re
 class expect(object):
 
     def __init__(self, actual):
-        self.actual = actual
+        self._actual = actual
 
     def __getattr__(self, attrname):
         r = re.match(r'to_(not_)?(.+)', attrname)
-        return self._run_matcher(_matchers[r.group(2)], to_not=r.group(1))
+        if r:
+            self._matcher = _matchers[r.group(2)]
+            self._to_not = r.group(1) == 'not_'
+            return self
+        else:
+            raise AttributeError('%s instance has no attribute %r' % (
+                self.__class__.__name__, attrname))
 
-    def _run_matcher(self, matcher, to_not):
-        if not self._evaluate(matcher, to_not):
+    def _run_matcher(self):
+        if not self._evaluate(self._matcher, self._to_not):
             raise BrokenExpectation(
-              to_not and matcher.message_for_failed_should_not() \
-                      or matcher.message_for_failed_should())
+              self._to_not and self._matcher.message_for_failed_should_not() \
+                      or self._matcher.message_for_failed_should())
 
     def _evaluate(self, matcher, to_not):
         if to_not:
-            return not matcher.match(self.actual)
-        return matcher.match(self.actual)
+            return not matcher.match(self._actual)
+        return matcher.match(self._actual)
 
+    def __call__(self, *args, **kwargs):
+          self._matcher(*args, **kwargs)
+          return self._run_matcher()
 
 
 _matchers = {}

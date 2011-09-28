@@ -1,46 +1,46 @@
 >>> from fingernail import expect
 
->>> expect([]).to_be_empty
+>>> expect([]).to_be_empty()
 
->>> expect([]).to_not_be_empty
+>>> expect([]).to_not_be_empty()
 Traceback (most recent call last):
     ...
 BrokenExpectation: expected [] not to be empty
 
->>> expect([1]).to_not_be_empty
+>>> expect([1]).to_not_be_empty()
 
 
->>> expect([1]).to_be_empty
+>>> expect([1]).to_be_empty()
 Traceback (most recent call last):
     ...
 BrokenExpectation: expected [1] to be empty
 
 
->>> expect(()).to_be_empty
+>>> expect(()).to_be_empty()
 
->>> expect((1,)).to_not_be_empty
+>>> expect((1,)).to_not_be_empty()
 
->>> expect(()).to_not_be_empty
+>>> expect(()).to_not_be_empty()
 Traceback (most recent call last):
     ...
 BrokenExpectation: expected () not to be empty
 
->>> expect((1,)).to_be_empty
+>>> expect((1,)).to_be_empty()
 Traceback (most recent call last):
     ...
 BrokenExpectation: expected (1,) to be empty
 
 
->>> expect('').to_be_empty
->>> expect('a').to_not_be_empty
+>>> expect('').to_be_empty()
+>>> expect('a').to_not_be_empty()
 
->>> expect('a').to_be_empty
+>>> expect('a').to_be_empty()
 Traceback (most recent call last):
     ...
 BrokenExpectation: expected 'a' to be empty
 
->>> expect({}).to_be_empty
->>> expect({'a': 1}).to_not_be_empty
+>>> expect({}).to_be_empty()
+>>> expect({'a': 1}).to_not_be_empty()
 
 >>> class MyCollection:
 ...     def __init__(self, count):
@@ -48,6 +48,6 @@ BrokenExpectation: expected 'a' to be empty
 ...     def __len__(self):
 ...          return self.count
 
->>> expect(MyCollection(0)).to_be_empty
->>> expect(MyCollection(1)).to_not_be_empty
+>>> expect(MyCollection(0)).to_be_empty()
+>>> expect(MyCollection(1)).to_not_be_empty()
 
