@@ -1,3 +1,4 @@
+import sys
 import re
 
 
@@ -35,7 +36,14 @@ class expect(object):
 _matchers = {}
 
 def matcher(matcher_object):
-    _matchers[matcher_object.name] = matcher_object()
+    try:
+        _matchers[matcher_object.name] = matcher_object()
+    except TypeError, e:
+        e = sys.exc_info()[1]
+        if str(e).startswith('__init__() takes exactly'):
+            raise TypeError('matcher class constructor cannot have arguments')
+        else:
+            raise
 
 
 class BrokenExpectation(AssertionError):
