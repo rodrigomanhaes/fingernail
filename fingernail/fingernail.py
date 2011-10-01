@@ -37,7 +37,10 @@ _matchers = {}
 
 def matcher(matcher_object):
     try:
-        _matchers[matcher_object.name] = matcher_object()
+        matcher_name = getattr(matcher_object, 'name', None)
+        if not matcher_name:
+            matcher_name = snakize_class_name(matcher_object)
+        _matchers[matcher_name] = matcher_object()
     except TypeError, e:
         e = sys.exc_info()[1]
         if str(e).startswith('__init__() takes exactly'):
@@ -48,4 +51,14 @@ def matcher(matcher_object):
 
 class BrokenExpectation(AssertionError):
       pass
+
+
+def snakize_class_name(klass):
+    class_name = str(klass.__name__).split('.')[-1]
+    snaked = ''
+    for ch in class_name:
+        if ch.isupper() and len(snaked) > 0:
+            snaked += '_'
+        snaked += ch.lower()
+    return snaked
 
