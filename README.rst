@@ -6,9 +6,10 @@ Expectations written in Python.
 
 Example::
 
-    expect([]).to_be_empty
+>>> from fingernail import expect
 
-    expect('').to_be_empty
+>>> expect([]).to_be_empty()
+>>> expect('').to_be_empty()
 
 
 where be_empty is a Should-DSL compatible matcher. See how to create a matcher
