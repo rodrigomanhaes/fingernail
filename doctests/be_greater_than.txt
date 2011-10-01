@@ -1,0 +1,24 @@
+>>> from fingernail import expect
+
+>>> expect(1).to_be_greater_than(0.9)
+
+>>> expect(1).to_be_greater_than(1)
+Traceback (most recent call last):
+    ...
+BrokenExpectation: expected 1 to be greater than 1
+
+>>> expect(1).to_be_greater_than(2)
+Traceback (most recent call last):
+    ...
+BrokenExpectation: expected 1 to be greater than 2
+
+>>> expect(1).to_not_be_greater_than(2)
+
+>>> name = 'b'
+>>> expect(name).to_be_greater_than('a')
+
+>>> expect(name).to_not_be_greater_than('a')
+Traceback (most recent call last):
+    ...
+BrokenExpectation: expected 'b' to not be greater than 'a'
+
